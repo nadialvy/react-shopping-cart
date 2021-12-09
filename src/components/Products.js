@@ -6,7 +6,7 @@ export default class Products extends Component {
         return (
             <div>
                 <ul className="products">
-                    {this.props.products.map( product =>(
+                    {this.props.products.map( product =>( // products.map
                         <li key={product._id}>
                             <div className="product">
                                 <a href={"#" + product._id}>
@@ -17,7 +17,7 @@ export default class Products extends Component {
                                     <div>
                                         {formatCurrency(product.price)}
                                     </div>
-                                    <button className="button primary">
+                                    <button className="button primary" onClick={() => this.props.addToCart(product)}>
                                         Add To Cart
                                     </button>
                                 </div>
