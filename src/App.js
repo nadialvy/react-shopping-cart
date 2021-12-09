@@ -10,18 +10,27 @@ class App extends React.Component {
     super();
     this.state = {
       products: data.products, //mengambil nilai products di dalam data .json
-      cartItems: [], //defaultnya tidak ada item
+      cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [], //by using this, we able to make the card persisten during refresh
       size: "",
       sort: ""
     };
   }
 
+  createOrder = (order) => {
+    alert("Need to save order for " + order.name);
+  }
+
   removeFromCart = (product) =>{
     const cartItems = this.state.cartItems.slice();
+
     //get rid pf current product tahat user select to remove
     this.setState({
       cartItems: cartItems.filter((x) => x._id !== product._id),
     });
+
+    //agar ketika di refresh cart tidak hilang
+    localStorage.setItem("cartItems", JSON.stringify(cartItems.filter((x) => x._id !== product._id)));
+    
   };
 
   addToCart = (product) => {
@@ -40,7 +49,10 @@ class App extends React.Component {
     }
 
     this.setState({cartItems});
-  
+
+    //agar ketika di refresh cart tidak hilang
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //JSON .stringify() -> convert js obj to string
   };
 
   sortProducts = (event) =>{
@@ -113,7 +125,11 @@ class App extends React.Component {
               ></Products>
             </div>
             <div className="sidebar">
-              <Cart cartItems={this.state.cartItems} removeFromCart={this.removeFromCart}/>
+              <Cart
+                cartItems={this.state.cartItems}
+                removeFromCart={this.removeFromCart}
+                createOrder={this.createOrder}
+                ></Cart>
             </div>
           </div>
         </main>
