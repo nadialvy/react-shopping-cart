@@ -4,11 +4,11 @@ export default class filter extends Component {
     render() {
         return (
             <div  className="filter"> 
-                <div className="filter-result">
-                    {this.props.count} Product
+                 <div className="filter-result"> {/*this.props.count = 6 */}
+                    {this.props.count} Product  
                 </div>
 
-                <div className="filter-sort">
+                <div className="filter-sort"> {/* onChange mengeksekusi js ketika user mengganti piliham option */}
                     Order {" "}
                     <select value={this.props.sort} onChange={this.props.sortProducts}>
                         <option>Latest</option>
